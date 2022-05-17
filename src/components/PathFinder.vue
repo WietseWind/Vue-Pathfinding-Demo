@@ -225,37 +225,6 @@ export default defineComponent({
 
       return results;
     },
-    // async go() {
-    //   // console.log(this.account, this.accountTypeLabel);
-    //   this.accountName = "";
-
-    //   const results = await this.call({
-    //     command: "account_currencies",
-    //     account: this.account,
-    //   });
-
-    //   this.currencies = [
-    //     { code: "XRP", label: "XRP (native asset)" },
-    //     ...(results?.receive_currencies || []).map((code: string) => {
-    //       return {
-    //         code,
-    //         label: utils.currencyCodeFormat(code),
-    //       };
-    //     }),
-    //   ];
-
-    //   if (this.ready && !this.loading && this.error === "") {
-    //     this.accountName = "Loading account name...";
-    //     const accountInfoCall = await fetch(
-    //       "https://xumm.app/api/v1/platform/account-meta/" + this.account
-    //     );
-    //     const accountInfo = await accountInfoCall.json();
-    //     this.lookedUpAccount = accountInfo?.account;
-    //     this.accountName =
-    //       accountInfo?.xummProfile?.accountAlias ||
-    //       accountInfo?.thirdPartyProfiles?.[0]?.accountAlias;
-    //   }
-    // },
   },
 });
 </script>
