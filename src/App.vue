@@ -84,6 +84,12 @@
       ></div>
     </div>
     <!-- <pre>{{ pathfindingParams }}</pre> -->
+    <div class="py-2">
+      <a href="https://github.com/WietseWind/Vue-Pathfinding-Demo"
+        >Source code</a
+      >
+      by <a href="https://wietse.com">Wietse</a>
+    </div>
   </div>
 </template>
 
