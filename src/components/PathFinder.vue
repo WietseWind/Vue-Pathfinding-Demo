@@ -190,11 +190,18 @@ export default defineComponent({
       this.loading = true;
       this.error = "";
 
+      this.xrpl?.send({
+        id: this.lastId,
+        command: "path_find",
+        subcommand: "close",
+      });
+
       this.lastId = this.rand(6);
 
       const command: Call = {
         id: this.lastId,
-        command: "ripple_path_find",
+        command: "path_find",
+        subcommand: "create",
         source_account: this.params?.source?.account || "",
         destination_account: this.params?.destination?.account || "",
         destination_amount:
@@ -215,7 +222,24 @@ export default defineComponent({
 
       const results = await this.xrpl?.send(command);
       console.log("pfcall", { command, results });
-      this.paths = (results?.alternatives || []) as XrplPaths;
+
+      this.paths = (results?.result?.alternatives || []) as XrplPaths;
+
+      this.xrpl?.on("path", (path) => {
+        if (path?.destination_amount) {
+          console.log("Async path", path.id, path.id === this.lastId, path);
+          if (path.id === this.lastId) {
+            this.paths = (path?.alternatives || []) as XrplPaths;
+          } else {
+            // Old command, close
+            this.xrpl?.send({
+              id: path.id,
+              command: "path_find",
+              subcommand: "close",
+            });
+          }
+        }
+      });
 
       this.loading = false;
 
@@ -225,37 +249,6 @@ export default defineComponent({
 
       return results;
     },
-    // async go() {
-    //   // console.log(this.account, this.accountTypeLabel);
-    //   this.accountName = "";
-
-    //   const results = await this.call({
-    //     command: "account_currencies",
-    //     account: this.account,
-    //   });
-
-    //   this.currencies = [
-    //     { code: "XRP", label: "XRP (native asset)" },
-    //     ...(results?.receive_currencies || []).map((code: string) => {
-    //       return {
-    //         code,
-    //         label: utils.currencyCodeFormat(code),
-    //       };
-    //     }),
-    //   ];
-
-    //   if (this.ready && !this.loading && this.error === "") {
-    //     this.accountName = "Loading account name...";
-    //     const accountInfoCall = await fetch(
-    //       "https://xumm.app/api/v1/platform/account-meta/" + this.account
-    //     );
-    //     const accountInfo = await accountInfoCall.json();
-    //     this.lookedUpAccount = accountInfo?.account;
-    //     this.accountName =
-    //       accountInfo?.xummProfile?.accountAlias ||
-    //       accountInfo?.thirdPartyProfiles?.[0]?.accountAlias;
-    //   }
-    // },
   },
 });
 </script>
