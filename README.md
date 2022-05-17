@@ -1,4 +1,6 @@
-# pathfinding-demo
+# XRP Ledger pathfinding-demo
+
+XRPL Pathfinding Demo: select destination account & currency, select source account and see avilable payment options using the DEX.
 
 ## Project setup
 ```
