@@ -2,6 +2,8 @@
 
 XRPL Pathfinding Demo: select destination account & currency, select source account and see avilable payment options using the DEX.
 
+Demo: https://xrpl-pathfinding.netlify.app
+
 ## Project setup
 ```
 npm install
@@ -16,11 +18,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
